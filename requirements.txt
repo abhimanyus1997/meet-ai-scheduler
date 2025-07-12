@@ -1,0 +1,12 @@
+# For notebooks
+ipykernel
+ipywidgets
+iprogress
+tqdm
+
+# For environment
+python-dotenv
+
+# LLM
+llama-index
+llama-index-llms-google-genai
