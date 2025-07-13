@@ -73,7 +73,6 @@ async def get_events(authorization: str = Header(None)):
 async def create_event(event: EventSchema, authorization: str = Header(None)):
     if not authorization:
         raise HTTPException(status_code=401, detail="Missing access token")
-
     access_token = authorization.replace("Bearer ", "")
     creds = Credentials(token=access_token)
     service = build('calendar', 'v3', credentials=creds)
@@ -88,7 +87,6 @@ async def create_event(event: EventSchema, authorization: str = Header(None)):
 async def delete_event(event_id: str, authorization: str = Header(None)):
     if not authorization:
         raise HTTPException(status_code=401, detail="Missing access token")
-
     access_token = authorization.replace("Bearer ", "")
     creds = Credentials(token=access_token)
     service = build('calendar', 'v3', credentials=creds)
@@ -101,7 +99,6 @@ async def delete_event(event_id: str, authorization: str = Header(None)):
 async def update_event(event_id: str, event: EventSchema, authorization: str = Header(None)):
     if not authorization:
         raise HTTPException(status_code=401, detail="Missing access token")
-
     access_token = authorization.replace("Bearer ", "")
     creds = Credentials(token=access_token)
     service = build('calendar', 'v3', credentials=creds)
@@ -117,7 +114,6 @@ async def update_event(event_id: str, event: EventSchema, authorization: str = H
 async def login_google():
     print("GOOGLE_CLIENT_ID:", GOOGLE_CLIENT_ID)
     print("GOOGLE_REDIRECT_URI:", GOOGLE_REDIRECT_URI)
-
     params = {
         "client_id": GOOGLE_CLIENT_ID,
         "response_type": "code",
@@ -129,7 +125,6 @@ async def login_google():
 
     if not GOOGLE_CLIENT_ID or not GOOGLE_REDIRECT_URI:
         return {"error": "Missing required OAuth environment variables."}
-
     auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}"
     print("Auth URL:", auth_url)
     return {"auth_url": auth_url}
@@ -145,21 +140,16 @@ async def auth_google(code: str):
         "redirect_uri": GOOGLE_REDIRECT_URI,
         "grant_type": "authorization_code"
     }
-
     token_response = requests.post(token_url, data=data)
     token_json = token_response.json()
-
     access_token = token_json.get("access_token")
-
     user_info = requests.get(
         "https://www.googleapis.com/oauth2/v1/userinfo",
         headers={"Authorization": f"Bearer {access_token}"}
     ).json()
-
     if not access_token:
         raise HTTPException(
             status_code=400, detail="Failed to get access token")
-
     # Redirect back to the frontend with access_token as query param
     params = urlencode({
         "token": access_token,
