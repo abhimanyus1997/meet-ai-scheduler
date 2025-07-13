@@ -7,6 +7,18 @@ tqdm
 # For environment
 python-dotenv
 
+# For Server
+requests
+fastapi
+fastapi[standard]
+uvicorn
+python-jose[cryptography]
+python-multipart
+
 # LLM
 llama-index
 llama-index-llms-google-genai
+llama-index-tools-google
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
