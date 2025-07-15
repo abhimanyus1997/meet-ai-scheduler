@@ -15,10 +15,16 @@ uvicorn
 python-jose[cryptography]
 python-multipart
 
-# LLM
+# LLM-llama index
 llama-index
 llama-index-llms-google-genai
 llama-index-tools-google
+
+# LLM-langchain
+langchain-google-genai
+
+
+# Google Auth APIs
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
